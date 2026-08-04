@@ -1,19 +1,10 @@
-from pypdf import PdfReader
+from fastapi import UploadFile
 from pathlib import Path
 
-
-def extract_text(file_path: str) -> str:
-    path = Path(file_path)
-
-    if not path.exists():
-        raise FileNotFoundError(f"file not found: {file_path}")
-    if path.suffix.lower() != ".pdf":
-        raise ValueError("expected a PDF file")
-    reader = PdfReader(path)
-
-    text = []
-    for page  in reader.pages:
-        page_text = page.extract_text()
-        if page_text:
-            text.append(page_text)
-    return "\n".join(text)
+def save_pdf(file:UploadFile):
+    upload_dir = Path("uploads")
+    upload_dir.mkdir(exist_ok=True)
+    file_path = upload_dir / file.filename
+    with open(file_path, "wb") as buffer:
+        buffer.write(file.file.read())
+    return file_path
