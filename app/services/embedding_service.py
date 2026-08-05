@@ -10,6 +10,6 @@ def generate_embeddings(chunks: list[str]):
         model="text-embedding-3-small",
         input=chunks
     )
-    print(response.data[0].embedding)
+    #print(response.data[0].embedding)
     return [item.embedding for item in response.data]
 
