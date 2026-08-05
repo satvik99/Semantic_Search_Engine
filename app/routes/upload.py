@@ -8,6 +8,8 @@ from fastapi import APIRouter, HTTPException, UploadFile
 from app.services.pdf_service import save_pdf, extract_text
 from app.services.chunk_service import chunk_text
 from app.services.embedding_service import generate_embeddings
+from app.services.faiss_service import create_index, save_index
+from app.services.chunk_store import save_chunks
 
 
 # Create a router object.
@@ -38,6 +40,11 @@ def upload(file: UploadFile):
     chunks = chunk_text(text)
 
     embeddings = generate_embeddings(chunks)
+
+    index = create_index(embeddings)
+
+    save_index(index)
+    save_chunks(chunks)
 
     # Return a response to the client.
     # We return only the first 500 characters for debugging.
