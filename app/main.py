@@ -2,7 +2,9 @@
 from fastapi import FastAPI
 
 # Import the router that contains upload-related endpoints
-from app.routes.upload import router
+from app.routes.upload import router as upload_router
+
+from app.routes.search import router as search_router
 
 
 # Create the FastAPI application object
@@ -12,7 +14,9 @@ app = FastAPI()
 
 # Register all routes present inside upload.py with the application.
 # Without this, FastAPI would never know that /upload exists.
-app.include_router(router)
+app.include_router(upload_router)
+
+app.include_router(search_router)
 
 
 # Root endpoint (GET /)
