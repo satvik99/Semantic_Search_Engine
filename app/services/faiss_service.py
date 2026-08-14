@@ -28,7 +28,7 @@ def search_index(index, query_embedding: list[float], k: int = 5):
 
     distances, indices = index.search(query_vector, k)
 
-    return distances, indices
+    return distances[0], indices[0]
 
 
 def save_index(index):

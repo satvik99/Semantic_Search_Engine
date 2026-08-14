@@ -37,7 +37,12 @@ def upload(file: UploadFile):
     # Returns one large string.
     text = extract_text(saved_path)
 
-    chunks = chunk_text(text)
+    #chunks = chunk_text(text) - plain calling
+    chunks = chunk_text(
+    text=text,
+    chunk_size=50,
+    overlap=10
+)
 
     embeddings = generate_embeddings(chunks)
 
